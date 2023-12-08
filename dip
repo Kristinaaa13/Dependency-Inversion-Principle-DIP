@@ -1,0 +1,45 @@
+# Не дотримання принципу інверсії залежностей
+class LightBulb:
+    def turn_on(self):
+        print("LightBulb: Bulb turned on")
+
+    def turn_off(self):
+        print("LightBulb: Bulb turned off")
+
+class Switch:
+    def operate(self, bulb):
+        bulb.turn_on()
+
+# Дотримання принципу інверсії залежностей
+from abc import ABC, abstractmethod
+
+# Абстракція для світлового приладу
+class Switchable(ABC):
+    @abstractmethod
+    def turn_on(self):
+        pass
+
+    @abstractmethod
+    def turn_off(self):
+        pass
+
+# Реалізація абстракції для лампочки
+class LightBulb(Switchable):
+    def turn_on(self):
+        print("LightBulb: Bulb turned on")
+
+    def turn_off(self):
+        print("LightBulb: Bulb turned off")
+
+# Реалізація абстракції для перемикача
+class Switch:
+    def __init__(self, device):
+        self.device = device
+
+    def operate(self):
+        self.device.turn_on()
+
+# Використання
+bulb = LightBulb()
+switch = Switch(bulb)
+switch.operate()
